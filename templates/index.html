@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduGenie AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}" />
+</head>
+<body>
+    <div class="container">
+        <header class="hero">
+            <h1>EduGenie AI</h1>
+            <p>Ask, learn, revise, and plan your study path.</p>
+        </header>
+
+        <form method="post" action="/process" class="card">
+            <div class="form-group">
+                <label for="feature">Choose a feature</label>
+                <select id="feature" name="feature" required>
+                    <option value="explain" {% if selected_feature == 'explain' %}selected{% endif %}>Explain topic</option>
+                    <option value="qa" {% if selected_feature == 'qa' %}selected{% endif %}>Q&A</option>
+                    <option value="quiz" {% if selected_feature == 'quiz' %}selected{% endif %}>Generate quiz</option>
+                    <option value="summary" {% if selected_feature == 'summary' %}selected{% endif %}>Summarize text</option>
+                    <option value="recommend" {% if selected_feature == 'recommend' %}selected{% endif %}>Learning path</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="user_input">Your input</label>
+                <textarea id="user_input" name="user_input" rows="6" placeholder="Enter a topic, question, or text..." required>{{ user_input or '' }}</textarea>
+            </div>
+
+            <button type="submit">Generate</button>
+        </form>
+
+        {% if result is not none %}
+        <section class="card output">
+            <h2>Result</h2>
+            <div class="result-box">{{ result }}</div>
+        </section>
+        {% endif %}
+    </div>
+</body>
+</html>
